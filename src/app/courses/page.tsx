@@ -8,7 +8,7 @@ import CardBox from './card';
 interface Course {
   title: string;
   price: number;
-  teacher: string;
+  author: string;
  
 }
 
@@ -31,9 +31,9 @@ const CoursesPage: React.FC = () => {
         const data = await response.json();
 
         // Check if data.Courses.rows is an array before setting state
-        if (Array.isArray(data.Courses.rows)) {
-          console.log(data.Courses);
-          setCourses(data.Courses.rows);
+        if (Array.isArray(data.Courses)) {
+          console.log(data);
+          setCourses(data.Courses);
         } else {
           throw new Error('Invalid courses data structure');
         }
@@ -60,13 +60,14 @@ const CoursesPage: React.FC = () => {
         ) : (
           <div>
             {courses.map((course, index) => (
-              <div key={index}>
+              <div>
                 <CardBox 
                   title={course.title}
                   price={course.price} 
-                  author={course.teacher} 
+                  author={course.author} 
                 />
                 <br/>
+                <h1>{course.title}</h1>
               </div>
             ))}
           </div>

@@ -11,7 +11,7 @@ interface Blog {
   UpdatedAt: string;
 }
 
-const CoursesPage: React.FC = () => {
+const BlogPage: React.FC = () => {
   // State to store the fetched blog posts
   const [blogs, setBlogs] = useState<Blog[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -28,9 +28,9 @@ const CoursesPage: React.FC = () => {
         const data = await response.json();
         
         // Check if data.blogPosts.rows is an array before setting state
-        if (Array.isArray(data.blogPosts.rows)) {
-          console.log(data.blogPosts.rows);
-          setBlogs(data.blogPosts.rows);
+        if (Array.isArray(data.blogPosts)) {
+          console.log(data.blogPosts);
+          setBlogs(data.blogPosts);
         } else {
           throw new Error('Invalid blog data structure');
         }
@@ -50,21 +50,24 @@ const CoursesPage: React.FC = () => {
 
   return (
     <div>
-      <h1>Courses</h1>
+     
       <div>
         {blogs.length === 0 ? (
           <p>No blogs available</p>
         ) : (
           <div>
-            {blogs.map((blog, index) => (
+            {blogs.map((blog,i) => (
               <>
-             
-               <CardBox 
-                key={index} 
+                 <CardBox 
+                
                 title={blog.title}
                 content={blog.content} 
                 author={blog.author} 
-              /></>
+              />
+              <br/>
+              </>
+             
+              
              
             ))}
           </div>
@@ -74,4 +77,4 @@ const CoursesPage: React.FC = () => {
   );
 };
 
-export default CoursesPage;
+export default BlogPage;

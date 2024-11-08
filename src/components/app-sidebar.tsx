@@ -8,7 +8,8 @@ import {
     SidebarGroupcourse,
     SidebarHomeGroup,
     SidebarGroupLabel,
-    SidebarGroupAction
+    SidebarGroupAction,
+    SidebarGroupForm
   } from "@/components/ui/sidebar"
  
   import { useRouter } from 'next/navigation';
@@ -38,7 +39,7 @@ import { use } from "react";
           </SidebarGroup> */}
          
           <SidebarGroupcourse onClick={() => handleNavigation('/courses')}/>
-          <SidebarGroupcourse onClick={() => handleNavigation('/blog-form')}/>
+          <SidebarGroupForm onClick={() => handleNavigation('/blog-form')}/>
         </SidebarContent>
         <SidebarFooter />
       </Sidebar>

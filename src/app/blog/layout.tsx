@@ -3,12 +3,12 @@ import { ReactNode } from "react";
 
 
 
-const CoursesLayout = ({ children }: { children: ReactNode }) => {
+const BlogLayout = ({ children }: { children: ReactNode }) => {
   return (
     <div className="min-h-screen flex flex-col bg-gray-100">
       {/* Header */}
-      <header className="dark text-dark p-4 text-center">
-      course 
+      <header className="dark  font-bold text-5xl text-center">
+      Blog
       </header>
 
       <main className="flex-1 p-8">{children}</main>
@@ -19,4 +19,4 @@ const CoursesLayout = ({ children }: { children: ReactNode }) => {
   );
 };
 
-export default CoursesLayout;
+export default BlogLayout;

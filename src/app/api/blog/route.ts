@@ -1,47 +1,37 @@
-import { sql } from '@vercel/postgres';
+
+import connection from '../../../lib/db';
 import { NextResponse } from 'next/server';
-
-
 
 export async function POST(request: Request) {
   try {
-    // Parse JSON body
-    const { title, content, author,status } = await request.json();
     
-    // Validate required fields
+    const { title, content, author, status } = await request.json();
+
     if (!title || !content || !author) {
       throw new Error('Title, content, and author are required');
     }
 
-    await sql`
-    INSERT INTO BlogPosts (Title, Content, Author)
-    VALUES (${title}, ${content}, ${author});
-  `;
-  
-    console.log("works");
+    await connection.execute(
+      `INSERT INTO posts (title, content, author) VALUES (?, ?, ? )`,
+      [title, content, author]
+    );
 
-    // Send a success response
+    console.log("Blog post added successfully");
+
     return NextResponse.json({ message: 'Blog post added successfully' }, { status: 201 });
   } catch (error: any) {
-    console.log(error);
-    return NextResponse.json({ error: error.message,messgae:"error is here at last" }, { status: 500 });
+    console.error(error);
+    return NextResponse.json({ error: error.message, message: "An error occurred" }, { status: 500 });
   }
 }
-
-
 
 export async function GET(request: Request) {
   try {
-    // Fetch all blog posts from the database
-    const blogPosts = await sql`SELECT * FROM BlogPosts;`;
-    
-    // Send the blog posts as the response
+    const [blogPosts] = await connection.execute(`SELECT * FROM posts`);
+
     return NextResponse.json({ blogPosts }, { status: 200 });
-  } catch (err: any) {
-    // Handle any errors and send a failure response
-    return NextResponse.json({ error: err.message }, { status: 500 });
+  } catch (error: any) {
+    console.error(error);
+    return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
-
-
-
