@@ -31,9 +31,9 @@ export default function Home() {
       </button>
      
 
-      <header className="text-2xl font-bold">Welcome to Course blog</header>
+      <header className="text-2xl font-bold">Welcome to Course & blog</header>
 
-      {/* Main content section */}
+
       <main className="flex flex-col items-center space-y-8">
     
         <Image

@@ -3,8 +3,6 @@ import React, { useEffect, useState } from 'react';
 import CardBox from './card';
 
 
-
-// Define the Course type based on the structure of your course data
 interface Course {
   title: string;
   price: number;
@@ -15,12 +13,12 @@ interface Course {
 const CoursesPage: React.FC = () => {
 
   
-  // State to store the fetched courses
+  
   const [courses, setCourses] = useState<Course[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Fetch all courses when the component mounts
+  
   useEffect(() => {
     const fetchCourses = async () => {
       try {
@@ -30,7 +28,7 @@ const CoursesPage: React.FC = () => {
         }
         const data = await response.json();
 
-        // Check if data.Courses.rows is an array before setting state
+        
         if (Array.isArray(data.Courses)) {
           console.log(data);
           setCourses(data.Courses);
@@ -53,7 +51,7 @@ const CoursesPage: React.FC = () => {
 
   return (
     <div>
-      {/* <h1>Courses</h1> */}
+      
       <div>
         {courses.length === 0 ? (
           <p>No courses available</p>
@@ -67,7 +65,7 @@ const CoursesPage: React.FC = () => {
                   author={course.author} 
                 />
                 <br/>
-                <h1>{course.title}</h1>
+               
               </div>
             ))}
           </div>
