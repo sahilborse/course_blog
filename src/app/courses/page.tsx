@@ -29,9 +29,9 @@ const CoursesPage: React.FC = () => {
         const data = await response.json();
 
         
-        if (Array.isArray(data.Courses)) {
+        if (Array.isArray(data.rows)) {
           console.log(data);
-          setCourses(data.Courses);
+          setCourses(data.rows);
         } else {
           throw new Error('Invalid courses data structure');
         }

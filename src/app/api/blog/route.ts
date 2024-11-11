@@ -1,20 +1,15 @@
-
-import connection from '../../../lib/db';
+import { sql } from "@vercel/postgres";
 import { NextResponse } from 'next/server';
 
 export async function POST(request: Request) {
   try {
-    
-    const { title, content, author, status } = await request.json();
+    const { title, content, author } = await request.json();
 
     if (!title || !content || !author) {
       throw new Error('Title, content, and author are required');
     }
 
-    await connection.execute(
-      `INSERT INTO posts (title, content, author) VALUES (?, ?, ? )`,
-      [title, content, author]
-    );
+    await sql`INSERT INTO BlogPosts (title, content, author) VALUES (${title}, ${content}, ${author})`;
 
     console.log("Blog post added successfully");
 
@@ -27,9 +22,9 @@ export async function POST(request: Request) {
 
 export async function GET(request: Request) {
   try {
-    const [blogPosts] = await connection.execute(`SELECT * FROM posts`);
+    const blogPosts = await sql`SELECT * FROM BlogPosts`;
 
-    return NextResponse.json({ blogPosts }, { status: 200 });
+    return NextResponse.json({ blogPosts: blogPosts.rows }, { status: 200 });
   } catch (error: any) {
     console.error(error);
     return NextResponse.json({ error: error.message }, { status: 500 });
