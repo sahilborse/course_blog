@@ -14,19 +14,21 @@ export async function POST(request: Request) {
     console.log("Blog post added successfully");
 
     return NextResponse.json({ message: 'Blog post added successfully' }, { status: 201 });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error(error);
-    return NextResponse.json({ error: error.message, message: "An error occurred" }, { status: 500 });
+    const errorMessage = error instanceof Error ? error.message : 'An error occurred';
+    return NextResponse.json({ error: errorMessage, message: "An error occurred" }, { status: 500 });
   }
 }
 
-export async function GET(request: Request) {
+export async function GET() { 
   try {
     const blogPosts = await sql`SELECT * FROM BlogPosts`;
 
     return NextResponse.json({ blogPosts: blogPosts.rows }, { status: 200 });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error(error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    const errorMessage = error instanceof Error ? error.message : 'An error occurred';
+    return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
 }

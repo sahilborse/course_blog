@@ -40,9 +40,12 @@ const BlogPage: React.FC = () => {
         } else {
           throw new Error('Invalid blog data structure');
         }
-      } catch (err: any) {
-        setError(err.message);
-      } finally {
+      } catch (err: unknown) {
+        if (err instanceof Error) {
+          setError(err.message);
+        } else {
+          setError('An unexpected error occurred');
+        }
         setLoading(false);
       }
     };

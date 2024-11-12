@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 
-import { useState, useEffect } from "react";
+import {  useEffect } from "react";
 import { useGlobalContext } from './context/GlobalContext';
 
 export default function Home() {

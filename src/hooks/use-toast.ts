@@ -18,12 +18,12 @@ type ToasterToast = ToastProps & {
   action?: ToastActionElement
 }
 
-const actionTypes = {
-  ADD_TOAST: "ADD_TOAST",
-  UPDATE_TOAST: "UPDATE_TOAST",
-  DISMISS_TOAST: "DISMISS_TOAST",
-  REMOVE_TOAST: "REMOVE_TOAST",
-} as const
+// const actionTypes = {
+//   ADD_TOAST: "ADD_TOAST",
+//   UPDATE_TOAST: "UPDATE_TOAST",
+//   DISMISS_TOAST: "DISMISS_TOAST",
+//   REMOVE_TOAST: "REMOVE_TOAST",
+// } as const
 
 let count = 0
 
@@ -32,7 +32,12 @@ function genId() {
   return count.toString()
 }
 
-type ActionType = typeof actionTypes
+type ActionType = {
+  ADD_TOAST: "ADD_TOAST";
+  UPDATE_TOAST: "UPDATE_TOAST";
+  DISMISS_TOAST: "DISMISS_TOAST";
+  REMOVE_TOAST: "REMOVE_TOAST";
+}
 
 type Action =
   | {
@@ -51,6 +56,29 @@ type Action =
       type: ActionType["REMOVE_TOAST"]
       toastId?: ToasterToast["id"]
     }
+
+/////////////////////////////////////////////////////
+// type ActionType = "ADD_TOAST" | "UPDATE_TOAST" | "DISMISS_TOAST" | "REMOVE_TOAST";
+
+// type Action =
+//   | {
+//       type: ActionType;
+//       toast: ToasterToast;
+//     }
+//   | {
+//       type: ActionType;
+//       toast: Partial<ToasterToast>;
+//     }
+//   | {
+//       type: ActionType;
+//       toastId?: ToasterToast["id"];
+//     }
+//   | {
+//       type: ActionType;
+//       toastId?: ToasterToast["id"];
+//     }
+
+///////////////////////////////////////////////////////
 
 interface State {
   toasts: ToasterToast[]
@@ -158,7 +186,7 @@ function toast({ ...props }: Toast) {
       ...props,
       id,
       open: true,
-      onOpenChange: (open: any) => {
+      onOpenChange: (open: boolean) => {
         if (!open) dismiss()
       },
     },
