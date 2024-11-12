@@ -10,13 +10,13 @@ const BlogLayout = async({ children }: { children: ReactNode }) => {
   if (user_data !== allowedEmail) {
     
     return (
-      <div className="min-h-screen flex flex-col bg-gray-100">
+      <div className="min-h-screen flex flex-col ">
         <header className="dark text-dark p-4 text-center">Unauthorized Access</header>
       </div>
     );
   }
   return (
-    <div className="min-h-screen flex flex-col bg-gray-100">
+    <div className="min-h-screen flex flex-col ">
       
       <header className="dark text-dark p-4 text-center">
       Blog Form

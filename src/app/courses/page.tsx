@@ -1,8 +1,9 @@
 "use client";
 import React, { useEffect, useState } from 'react';
 import CardBox from './card';
+import { useGlobalContext } from '../context/GlobalContext';
 
-
+import Image from "next/image";
 interface Course {
   title: string;
   price: number;
@@ -11,7 +12,16 @@ interface Course {
 }
 
 const CoursesPage: React.FC = () => {
+  // for dark mode activation
 
+  const {darkMode, setDarkMode}=useGlobalContext();
+  useEffect(() => {
+    if (darkMode) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [darkMode]);
   
   
   const [courses, setCourses] = useState<Course[]>([]);
@@ -50,7 +60,19 @@ const CoursesPage: React.FC = () => {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <div>
+    <div className="  items-center   min-h-screen  pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)] relative">
+      <button
+          onClick={() => setDarkMode(!darkMode)}
+          className="absolute top-4 right-4 p-2 bg-gray-200 dark:bg-gray-700 rounded-full"
+        >
+      
+          <Image
+            src={darkMode ? "./images/moon.svg" : "./images/sun.svg"}
+            alt={darkMode ? "Moon Icon" : "Sun Icon"}
+            width={24}
+            height={24}
+          />
+      </button>
       
       <div>
         {courses.length === 0 ? (
@@ -60,6 +82,7 @@ const CoursesPage: React.FC = () => {
             {courses.map((course, index) => (
               <div>
                 <CardBox 
+                  key={index}
                   title={course.title}
                   price={course.price} 
                   author={course.author} 

@@ -1,10 +1,11 @@
 "use client"
 
+import React, { useEffect, useState } from 'react';
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
-import React from "react"
-
+import { useGlobalContext } from '../context/GlobalContext';
+import Image from "next/image";
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -27,6 +28,18 @@ const FormSchema = z.object({
 })
 
 const BlogPage = () => {
+   // for dark mode activation
+   const {darkMode, setDarkMode}=useGlobalContext();
+   
+   useEffect(() => {
+    if (darkMode) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [darkMode]);
+  
+   
   const { toast } = useToast()
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -69,8 +82,21 @@ const BlogPage = () => {
   }
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+    <div className='items-center  min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)] relative'>
+    <button
+    onClick={() => setDarkMode(!darkMode)}
+    className="absolute top-4 right-4 p-2 bg-gray-200 dark:bg-gray-700 rounded-full"
+  >
+
+    <Image
+      src={darkMode ? "./images/moon.svg" : "./images/sun.svg"}
+      alt={darkMode ? "Moon Icon" : "Sun Icon"}
+      width={24}
+      height={24}
+    />
+</button>
+    <Form {...form} >
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 relative">
        
         <FormField
           control={form.control}
@@ -135,6 +161,7 @@ const BlogPage = () => {
         <Button type="submit">Submit</Button>
       </form>
     </Form>
+    </div>
   )
 }
 

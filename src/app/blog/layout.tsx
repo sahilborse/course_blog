@@ -5,7 +5,7 @@ import { ReactNode } from "react";
 
 const BlogLayout = ({ children }: { children: ReactNode }) => {
   return (
-    <div className="min-h-screen flex flex-col bg-gray-100">
+    <div className="min-h-screen flex flex-col">
       {/* Header */}
       <header className="dark  font-bold text-5xl text-center">
       Blog
